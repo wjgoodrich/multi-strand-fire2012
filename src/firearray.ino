@@ -89,8 +89,10 @@ void loop()
   //   CRGB lightcolor = CHSV(hue,128,255); // half 'whitened', full brightness
   //   gPal = CRGBPalette16( CRGB::Black, darkcolor, lightcolor, CRGB::White);
 
-
-  Fire2012WithPalette(1); // run simulation frame, using palette colors
+  for (int i = 0; i <= numStrands; i++)
+  {
+    Fire2012WithPalette(i); // run simulation frame, using palette colors
+  }
 
   FastLED.show(); // display this frame
   FastLED.delay(1000 / FRAMES_PER_SECOND);
@@ -137,6 +139,13 @@ void loop()
 
 void Fire2012WithPalette(uint8_t x)
 {
+  // odd strands go up, even strands go down
+  if(x % 2 == 0){
+    gReverseDirection = true;
+  } else {
+    gReverseDirection = false;
+  }
+
 // Array of temperature readings at each simulation cell
   // static byte heat[NUM_LEDS];
   strandLength = endPixel[x] - startPixel[x] + 1;
